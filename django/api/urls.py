@@ -54,6 +54,11 @@ router.register("friendships", views.FriendshipViewSet)
 router.register("userbook", views.UserBookViewSet)
 
 urlpatterns = [
-    path("", include(router.urls)),
-    # path("accounts", include("accounts.url")),
+    path("viewset", include(router.urls)),
+    path("users", views.getUsers, name="users"),
+    path("user/<str:user_id>/", views.getUser, name="user"),
+    path("books", views.getBooks, name="books"),
+    path("book/<str:book_id>/", views.getBook, name="book"),
+    path("userbooks", views.getUserBooks, name="userbooks"),
+    path("userbook/<str:user_book_id>/", views.getUserBook, name="userbook"),
 ]
