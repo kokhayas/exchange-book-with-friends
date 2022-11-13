@@ -151,3 +151,9 @@ Release operations
 - Merge `release` branch into `main`.
 
 </details>
+
+
+exchange book with friends
+https://dbdiagram.io/d/636dbbd6c9abfc611171db06
+
+
