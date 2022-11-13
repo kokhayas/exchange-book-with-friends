@@ -1,0 +1,227 @@
+{
+	"authors": [
+		{
+			"id": 1,
+			"name": "芝田将",
+			"english_name": "Shibata Masashi",
+			"description": "サイバーエージェント出身",
+			"info_url": "",
+			"image_url": ""
+		}
+	],
+	"books": [
+		{
+			"id": 1,
+			"title": "実践Django",
+			"description": "Django application",
+			"info_url": "https://www.shoeisha.co.jp/book/detail/9784798153964",
+			"image_url": "https://www.seshop.com/static/images/product/21340/L.png"
+		},
+		{
+			"id": 2,
+			"title": "aaa",
+			"description": "aaa",
+			"info_url": "",
+			"image_url": ""
+		}
+	],
+	"genres": [
+		{
+			"id": 1,
+			"genre": "Webアプリケーション",
+			"description": "Webアプリケーション",
+			"image_url": "https://miro.medium.com/max/640/1*GaBtlHe240ZkwlcBrFczgQ.jpeg"
+		}
+	],
+	"rooms": [
+		{
+			"id": 1,
+			"name": "東京大学　学生",
+			"created_at": "2022-11-12T22:46:53.799452+09:00",
+			"updated_at": "2022-11-12T22:46:53.799466+09:00",
+			"is_active": false,
+			"is_pair": false
+		}
+	],
+	"universities": [
+		{
+			"id": 1,
+			"university": "東京大学",
+			"student_mail_address_endpoint": "g.ecc.u-tokyo.ac.jp",
+			"alumni_mail_address_endpoint": "alumni.u-tokyo.ac.jp"
+		}
+	],
+	"users": [
+		{
+			"id": 1,
+			"password": "password",
+			"last_login": null,
+			"is_superuser": false,
+			"username": "KokiHayashi",
+			"first_name": "洸希",
+			"last_name": "林",
+			"email": "1234.884.koki@gmail.com",
+			"is_staff": false,
+			"is_active": false,
+			"date_joined": "2022-11-12T22:41:55.388253+09:00",
+			"groups": [],
+			"user_permissions": []
+		},
+		{
+			"id": 2,
+			"password": "password",
+			"last_login": null,
+			"is_superuser": false,
+			"username": "huga",
+			"first_name": "",
+			"last_name": "",
+			"email": "",
+			"is_staff": false,
+			"is_active": false,
+			"date_joined": "2022-11-12T22:47:36.939315+09:00",
+			"groups": [],
+			"user_permissions": []
+		}
+	],
+	"userinfos": [
+		{
+			"id": 1,
+			"pen_name": "kokhayas",
+			"gender_code": "m",
+			"age": 22,
+			"language": "jp",
+			"university_email": "1234hakataramen@g.ecc.u-tokyo.ac.jp",
+			"phone_number": "+819015607679",
+			"second_email": "1234.884.koki@gmail.com",
+			"exchanged_number": 0,
+			"being_blocked_number": 0,
+			"is_banned": false,
+			"created_at": "2022-11-12T22:42:42.674316+09:00",
+			"updated_at": "2022-11-12T22:42:42.674327+09:00",
+			"bio": "大学院生です",
+			"location": "東京都文京区",
+			"birth_date": "2000-01-21",
+			"share_url": "https://github.com/kokhayas",
+			"user": 1,
+			"university_code": 1
+		}
+	],
+	"authorbooks": [
+		{
+			"id": 1,
+			"author_id": 1,
+			"book_id": 1
+		}
+	],
+	"bookgenres": [
+		{
+			"id": 1,
+			"book_id": 1,
+			"genre_id": 1
+		}
+	],
+	"categories": [
+		{
+			"id": 1,
+			"name": "東大生, 東大大学院生",
+			"description": "東大生, 東大院生",
+			"image_url": "",
+			"info_url": ""
+		}
+	],
+	"usercategories": [
+		{
+			"id": 1,
+			"user_id": 1,
+			"category_id": 1
+		}
+	],
+	"usergenres": [
+		{
+			"id": 1,
+			"user_id": 1,
+			"genre_id": 1
+		}
+	],
+	"userroommessages": [
+		{
+			"id": 1,
+			"message": "Hello",
+			"created_at": "2022-11-12T22:56:54.437896+09:00",
+			"updated_at": "2022-11-12T22:56:54.437917+09:00",
+			"is_deleted": false,
+			"is_modified": false,
+			"user_id": 1,
+			"room_id": 1
+		}
+	],
+	"userroomparticipants": [
+		{
+			"id": 1,
+			"created_at": "2022-11-12T22:57:03.545491+09:00",
+			"updated_at": "2022-11-12T22:57:03.545502+09:00",
+			"is_user_active": false,
+			"is_room_muted": false,
+			"user_id": 1,
+			"room_id": 1
+		}
+	],
+	"exchangerequeests": [
+		{
+			"id": 1,
+			"status_id": 0,
+			"created_at": "2022-11-12T23:01:33.504774+09:00",
+			"updated_at": "2022-11-12T23:01:33.504787+09:00",
+			"requester_id": 1,
+			"addressee_id": 2,
+			"book_id": 2
+		},
+		{
+			"id": 2,
+			"status_id": 1,
+			"created_at": "2022-11-12T23:01:38.069434+09:00",
+			"updated_at": "2022-11-12T23:01:38.069449+09:00",
+			"requester_id": 1,
+			"addressee_id": 2,
+			"book_id": 2
+		}
+	],
+	"friendships": [
+		{
+			"id": 1,
+			"status_id": 1,
+			"created_at": "2022-11-12T23:01:11.042533+09:00",
+			"updated_at": "2022-11-12T23:01:11.042551+09:00",
+			"requester_id": 1,
+			"addressee_id": 2
+		},
+		{
+			"id": 2,
+			"status_id": 3,
+			"created_at": "2022-11-12T23:01:19.939405+09:00",
+			"updated_at": "2022-11-12T23:01:19.939416+09:00",
+			"requester_id": 1,
+			"addressee_id": 2
+		}
+	],
+	"userbook": [
+		{
+			"id": 1,
+			"created_at": "2022-11-12T23:00:55.357835+09:00",
+			"updated_at": "2022-11-12T23:00:55.357851+09:00",
+			"is_sharable": true,
+			"requested_number": 0,
+			"user_id": 1,
+			"book_id": 1
+		},
+		{
+			"id": 2,
+			"created_at": "2022-11-12T23:01:00.401375+09:00",
+			"updated_at": "2022-11-12T23:01:00.401388+09:00",
+			"is_sharable": true,
+			"requested_number": 0,
+			"user_id": 2,
+			"book_id": 2
+		}
+	]
+}

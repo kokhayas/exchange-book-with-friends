@@ -1,0 +1,13 @@
+asgiref==3.5.2
+Django==4.1.2
+djangorestframework==3.14.0
+pytz==2022.5
+sqlparse==0.4.3
+psycopg2==2.9.4
+black==22.10.0
+flake8==5.0.4
+isort==5.10.1
+django-bootstrap5
+# mypy==0.982
+# django-stubs==1.12.0
+# djangorestframework-stubs==1.7.0
