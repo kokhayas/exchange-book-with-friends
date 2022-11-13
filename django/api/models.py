@@ -153,12 +153,16 @@ class UserRoomMessage(models.Model):
 
 class UserBook(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
+    book_id = models.ForeignKey(Book, null=True, blank=True, on_delete=models.CASCADE)
+    my_title = models.CharField(max_length=128, null=False, default="", blank=True)
+    my_description = models.TextField(null=False, default="", blank=True)
+    my_info_url = models.URLField(max_length=2048, null=False, default="", blank=True)
+    my_image_url = models.URLField(max_length=2048, null=False, default="", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_sharable = models.BooleanField(default=True)
-    requested_number = models.IntegerField(default=0)
-
+    is_being_shared = models.BooleanField(default=False)
+    genre_id = models.ForeignKey(Genre, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self):
         return self.user_id.username + " " + self.book_id.title
 
