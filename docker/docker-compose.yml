@@ -1,0 +1,73 @@
+version: '3.8'
+
+name: exchange-books-with-friends
+
+volumes:
+  postgres_volume:
+  node_modules_volume:
+
+
+services:
+  django:
+    depends_on:
+      - postgresdb
+    build:
+      context: ../django
+      dockerfile: ../docker/django/Dockerfile
+    volumes:
+      - ../django:/app/django
+    image: django
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgresdb
+      - POSTGRES_PORT=5432
+      - DJANGO_SECRET=django-insecure-o-o$7bmhqrev8qlko^z^c#+m#8bmnnx_k3qz0vt#+oqri3(&%t
+      - DJANGO_DEBUG_MODE=True
+      - TZ=Asia/Tokyo
+    ports:
+      - "8000:8000"
+
+  postgresdb:
+    build:
+      context: ./postgresql
+      dockerfile: ./Dockerfile
+    image: postgresdb
+    user: postgres
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+
+  react:
+    build:
+      context: ../react
+      dockerfile: ../docker/react/Dockerfile
+    command: [ "yarn", "start" ]
+    image: react
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../react:/app/react
+      - node_modules_volume:/app/react/node_modules
+
+  json-sever:
+    build:
+      context: ./json-server
+      dockerfile: Dockerfile
+    command:
+      [
+        "json-server",
+        "--host",
+        "0.0.0.0",
+        "--watch",
+        "db.json"
+      ]
+    image: json-server
+    ports:
+      - "3001:3000"
