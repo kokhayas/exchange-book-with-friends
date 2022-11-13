@@ -13,10 +13,7 @@ LANGUAGE_CHOICES = (
     ("hb", "hebrew"),
 )
 
-
 User = get_user_model()
-
-
 
 class Book(models.Model):
     title = models.CharField(max_length=128)
