@@ -32,7 +32,6 @@ def getUsers(request):
             return Response(serializer.data)
         return Response(serializer.errors)
 
-@api_view(["GET", ""])
 
 
 class AuthorBookViewSet(viewsets.ModelViewSet):
