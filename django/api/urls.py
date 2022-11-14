@@ -53,7 +53,13 @@ router.register("exchangerequests", views.ExchangeRequestViewSet)
 router.register("friendships", views.FriendshipViewSet)
 router.register("userbook", views.UserBookViewSet)
 
+
+# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 urlpatterns = [
+    path("api/token/", views.MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("viewset", include(router.urls)),
     path("users", views.getUsers, name="users"),
     path("user/<str:user_id>/", views.getUser, name="user"),

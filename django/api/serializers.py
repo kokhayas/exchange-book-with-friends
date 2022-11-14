@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from django.contrib.auth.hashers import make_password  # 追加
+
 from .models import (
     Author,
     AuthorBook,
@@ -25,6 +27,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
+
+    def validate_password(self, value: str) -> str:
+        return make_password(value)
 
 
 class BookSerializer(serializers.ModelSerializer):

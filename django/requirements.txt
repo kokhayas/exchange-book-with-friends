@@ -9,6 +9,8 @@ flake8==5.0.4
 isort==5.10.1
 django-bootstrap5
 django-cors-headers
+djangorestframework-simplejwt
+djoser
 # mypy==0.982
 # django-stubs==1.12.0
 # djangorestframework-stubs==1.7.0
