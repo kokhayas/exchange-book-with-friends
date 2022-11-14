@@ -15,6 +15,7 @@ LANGUAGE_CHOICES = (
 
 User = get_user_model()
 
+
 class Book(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField(null=False, default="", blank=True)
@@ -160,6 +161,7 @@ class UserBook(models.Model):
     is_sharable = models.BooleanField(default=True)
     is_being_shared = models.BooleanField(default=False)
     genre_id = models.ForeignKey(Genre, on_delete=models.CASCADE, null=True, blank=True)
+
     def __str__(self):
         return self.user_id.username + " " + self.book_id.title
 

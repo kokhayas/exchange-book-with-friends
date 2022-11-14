@@ -114,12 +114,13 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 		authTokens: authTokens,
 	  }
 	  useEffect(() => {
-		let interval = setInterval(()=>{
+		const fourMinutes = 1000*60*4;
+		const interval = setInterval(()=>{
 			if (authTokens) {
 				updateToken()
 			}
-		}, 2000)
-		return () => clearInterval()
+		}, fourMinutes)
+		return () => clearInterval(interval)
 	  }, [authTokens, loading])
 
 	return(
