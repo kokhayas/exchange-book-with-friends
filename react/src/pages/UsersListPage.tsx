@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import ListUser from '../components/ListUser';
 import type { User } from '../types/index';
 
 const UsersListPage: React.FC = () => {
@@ -18,16 +19,11 @@ const UsersListPage: React.FC = () => {
   return (
 	<div>
 	  <h1>Users</h1>
-	  <ul>
-		{users.map(user => (
-		  <>
-		    <li key={user.id}>{user.username}</li>
-		    <li key={user.id}>{user.password} </li>
-			<li key={user.id}>{user.id} </li>
-
-		  </>
-		))}
-	  </ul>
+	  {users.map((user, index) => {
+		return (
+			<ListUser key={index} user={user} />
+			)
+	  })}
 	</div>
   );
 };
