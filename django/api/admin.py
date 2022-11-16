@@ -10,6 +10,7 @@ from .models import (
     ExchangeRequest,
     Friendship,
     Genre,
+    Note,
     Room,
     University,
     UserBook,
@@ -20,6 +21,7 @@ from .models import (
     UserRoomParticipant,
 )
 
+admin.site.register(Note)
 admin.site.register(Book)
 admin.site.register(Author)
 admin.site.register(AuthorBook)

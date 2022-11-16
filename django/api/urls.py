@@ -52,6 +52,7 @@ router.register("userroomparticipants", views.UserRoomParticipantViewSet)
 router.register("exchangerequests", views.ExchangeRequestViewSet)
 router.register("friendships", views.FriendshipViewSet)
 router.register("userbook", views.UserBookViewSet)
+router.register("note", views.NoteViewSet)
 
 
 # from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -62,9 +63,11 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("viewset", include(router.urls)),
     path("users", views.getUsers, name="users"),
-    path("user/<str:user_id>/", views.getUser, name="user"),
+    path("user/<int:pk>/", views.getUser, name="user"),
     path("books", views.getBooks, name="books"),
-    path("book/<str:book_id>/", views.getBook, name="book"),
+    path("book/<int:pk>/", views.getBook, name="book"),
     path("userbooks", views.getUserBooks, name="userbooks"),
-    path("userbook/<str:user_book_id>/", views.getUserBook, name="userbook"),
+    path("userbook/<int:pk>/", views.getUserBook, name="userbook"),
+    path("notes/", views.getNotes),
+    path("note/<int:pk>", views.getNote, name="note"),
 ]

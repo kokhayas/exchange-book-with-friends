@@ -1,7 +1,8 @@
 # from django.shortcuts import render
 # from rest_framework import viewsets
 from rest_framework import status, viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -15,6 +16,7 @@ from .models import (
     ExchangeRequest,
     Friendship,
     Genre,
+    Note,
     Room,
     University,
     User,
@@ -34,6 +36,7 @@ from .serializers import (
     ExchangeRequestSerializer,
     FriendshipSerializer,
     GenreSerializer,
+    NoteSerializer,
     RoomSerializer,
     UniversitySerializer,
     UserBookSerializer,
@@ -46,14 +49,19 @@ from .serializers import (
 )
 from .utils import (
     createBook,
+    createNote,
     createUser,
     deleteBook,
+    deleteNote,
     deleteUser,
     getBookDetail,
     getBookList,
+    getNoteDetail,
+    getNoteList,
     getUserDetail,
     getUserList,
     updateBook,
+    updateNote,
     updateUser,
 )
 
@@ -95,16 +103,15 @@ def getUsers(request):
 
 
 @api_view(["GET", "PUT", "DELETE"])
-def getUser(request, user_id):
-    user = User.objects.get(id=user_id)
+def getUser(request, pk):
     if request.method == "GET":
-        return getUserDetail(request, user_id)
+        return getUserDetail(request, pk)
 
     elif request.method == "PUT":
-        return updateUser(request, user_id)
+        return updateUser(request, pk)
 
     elif request.method == "DELETE":
-        return deleteUser(request, user_id)
+        return deleteUser(request, pk)
 
 
 # /api/v1/books/ GET
@@ -115,31 +122,55 @@ def getUser(request, user_id):
 # /api/v1/book/<id>/ DELETE
 
 
-@api_view
+@api_view(["GET", "POST"])
+@permission_classes([IsAuthenticated])
+def getNotes(request):
+    if request.method == "GET":
+        return getNoteList(request)
+    elif request.method == "POST":
+        return createNote(request)
+
+
+@api_view(["GET", "PUT", "DELETE"])
+def getNote(request, pk):
+    if request.method == "GET":
+        return getNoteDetail(request, pk)
+
+    elif request.method == "PUT":
+        return updateNote(request, pk)
+
+    elif request.method == "DELETE":
+        return deleteNote(request, pk)
+
+
+@api_view(["GET", "POST"])
+@permission_classes([IsAuthenticated])
 def getBooks(request):
+    # user = request.user
+    # books = user.book_set.all()
     if request.method == "GET":
         return getBookList(request)
     elif request.method == "POST":
         return createBook(request)
 
 
-@api_view
-def getBook(request, book_id):
+@api_view(["GET", "PUT", "DELETE"])
+def getBook(request, pk):
     if request.method == "GET":
-        return getBookDetail(request, book_id)
+        return getBookDetail(request, pk)
 
     elif request.method == "PUT":
-        return updateBook(request, book_id)
+        return updateBook(request, pk)
 
     elif request.method == "DELETE":
-        return deleteBook(request, book_id)
+        return deleteBook(request, pk)
 
 
 # this is the intermediate table between User and Book
 
 # class UserBook(models.Model):
-#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-#     book_id = models.ForeignKey(Book, null=True, blank=True, on_delete=models.CASCADE)
+#     pk = models.ForeignKey(User, on_delete=models.CASCADE)
+#     pk = models.ForeignKey(Book, null=True, blank=True, on_delete=models.CASCADE)
 #     my_title = models.CharField(max_length=128, null=False, default="", blank=True)
 #     my_description = models.TextField(null=False, default="", blank=True)
 #     my_info_url = models.URLField(max_length=2048, null=False, default="", blank=True)
@@ -167,9 +198,9 @@ def getUserBooks(request):
 
 
 @api_view(["GET", "PUT", "DELETE"])
-def getUserBook(request, user_book_id):
+def getUserBook(request, pk):
     try:
-        user_book = UserBook.objects.get(id=user_book_id)
+        user_book = UserBook.objects.get(id=pk)
     except UserBook.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -186,6 +217,11 @@ def getUserBook(request, user_book_id):
     elif request.method == "DELETE":
         user_book.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class NoteViewSet(viewsets.ModelViewSet):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
 
 
 class AuthorBookViewSet(viewsets.ModelViewSet):

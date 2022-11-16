@@ -11,6 +11,7 @@ from .models import (
     ExchangeRequest,
     Friendship,
     Genre,
+    Note,
     Room,
     University,
     User,
@@ -30,6 +31,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     def validate_password(self, value: str) -> str:
         return make_password(value)
+
+
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = "__all__"
 
 
 class BookSerializer(serializers.ModelSerializer):

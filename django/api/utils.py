@@ -11,6 +11,7 @@ from .models import (
     ExchangeRequest,
     Friendship,
     Genre,
+    Note,
     Room,
     University,
     User,
@@ -30,6 +31,7 @@ from .serializers import (
     ExchangeRequestSerializer,
     FriendshipSerializer,
     GenreSerializer,
+    NoteSerializer,
     RoomSerializer,
     UniversitySerializer,
     UserBookSerializer,
@@ -74,6 +76,42 @@ def deleteUser(request, user_id):
     user = User.objects.get(id=user_id)
     user.delete()
     return Response("User was deleted")
+
+
+def getNoteList(request):
+    user = request.user
+    notes = user.note_set.all()
+    # notes = Note.objects.all()
+    serializer = NoteSerializer(notes, many=True)
+    return Response(serializer.data)
+
+
+def createNote(request):
+    data = request.data
+    note = Note.objects.create(body=data["data"])
+    serializer = NoteSerializer(note, many=False)
+    return Response(serializer.data)
+
+
+def getNoteDetail(request, pk):
+    note = Note.objects.get(id=pk)
+    serializer = NoteSerializer(note, many=False)
+    return Response(serializer.data)
+
+
+def updateNote(request, pk):
+    note = Note.objects.get(id=pk)
+    data = request.data
+    note.body = data["data"]
+    note.save()
+    serializer = NoteSerializer(note, many=False)
+    return Response(serializer.data)
+
+
+def deleteNote(request, pk):
+    note = Note.objects.get(id=pk)
+    note.delete()
+    return Response("Note was deleted")
 
 
 def getBookList(request):

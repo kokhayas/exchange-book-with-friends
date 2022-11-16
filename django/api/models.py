@@ -16,6 +16,11 @@ LANGUAGE_CHOICES = (
 User = get_user_model()
 
 
+class Note(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    body = models.TextField()
+
+
 class Book(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField(null=False, default="", blank=True)

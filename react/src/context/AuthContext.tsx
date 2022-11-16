@@ -93,7 +93,7 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({'refresh': authTokens.refresh}),
+			body: JSON.stringify({'refresh': authTokens?.refresh}),
 		})
 		const data = await response.json();
 		if (response.status === 200) {
@@ -104,6 +104,7 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 		} else {
 			logoutUser();
 		}
+		if (loading) {setLoading(false);}
 	}
 	}
 
@@ -114,6 +115,9 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 		authTokens: authTokens,
 	  }
 	  useEffect(() => {
+		if (loading) {
+			updateToken();
+		}
 		const fourMinutes = 1000*60*4;
 		const interval = setInterval(()=>{
 			if (authTokens) {
@@ -126,7 +130,7 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 	return(
 		//  write a type
 		<AuthContext.Provider value={contextData}>
-			{children}
+			{loading ? null : children}
 		</AuthContext.Provider>
 	)
 }
