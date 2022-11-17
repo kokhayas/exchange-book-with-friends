@@ -126,7 +126,7 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 			updateToken();
 		}
 		const fourMinutes = 1000*60*4;
-		const twoSeconds = 2000
+		const twoSeconds = 1000*2
 		const interval = setInterval(()=>{
 			if (authTokens) {
 				updateToken()
