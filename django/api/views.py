@@ -122,13 +122,23 @@ def getUser(request, pk):
 # /api/v1/book/<id>/ DELETE
 
 
-@api_view(["GET", "POST"])
+# @api_view(["GET", "POST"])
+# @permission_classes([IsAuthenticated])
+# def getNotes(request):
+#     if request.method == "GET":
+#         return getNoteList(request)
+#     elif request.method == "POST":
+#         return createNote(request)
+
+
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def getNotes(request):
-    if request.method == "GET":
-        return getNoteList(request)
-    elif request.method == "POST":
-        return createNote(request)
+    # user = request.user
+    # notes = user.note_set.all()
+    notes = Note.objects.all()
+    serializer = NoteSerializer(notes, many=True)
+    return Response(serializer.data)
 
 
 @api_view(["GET", "PUT", "DELETE"])

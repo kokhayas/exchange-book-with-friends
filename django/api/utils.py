@@ -79,9 +79,9 @@ def deleteUser(request, user_id):
 
 
 def getNoteList(request):
-    user = request.user
-    notes = user.note_set.all()
-    # notes = Note.objects.all()
+    # user = request.user
+    # notes = user.note_set.all()
+    notes = Note.objects.all()
     serializer = NoteSerializer(notes, many=True)
     return Response(serializer.data)
 

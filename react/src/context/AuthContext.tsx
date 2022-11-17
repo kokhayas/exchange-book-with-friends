@@ -8,12 +8,17 @@ export interface User {
 	'user_id': number,
 	'username': string
 }
+export type AuthTokens =
+	{
+		access: string,
+		refresh: string,
+	} | null
 
 export interface AuthContextInterface {
 	loginUser: (event: React.FormEvent<HTMLFormElement>) => void;
 	logoutUser: () => void;
 //   checkingSession: boolean;
-     authTokens: {access: string, refresh: string} | '' | null;
+     authTokens: AuthTokens
 //   idToken: string | null;
 //   expiresAt: number | null;
 //   isAuthenticated: boolean;
@@ -43,6 +48,7 @@ export const AuthContext = React.createContext<AuthContextInterface>(
   authContextDefaults
 );
 
+
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 	const [loading, setLoading] = React.useState<boolean>(true);
@@ -50,7 +56,7 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 	// localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens') || '{}'): null;
 	// const [user, setUser] = React.useState<User | null>(null);
 	//   const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
-	  const [authTokens, setAuthTokens] = React.useState<{access: string, refresh: string} | '' | null>(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens') || '{}'): null);
+	  const [authTokens, setAuthTokens] = React.useState<AuthTokens>(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens') || '{}'): JSON.parse('{}'));
 	  const [user, setUser] = React.useState<User | null>(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens') || '{}'): null)
 	  const loginUser = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -65,10 +71,11 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 			},
 			body: JSON.stringify({'username': target.username.value, 'password': target.password.value})
 		})
-		const data: {access: string, refresh: string} | null = await response.json();
+		const data: AuthTokens = await response.json();
 
 		if (response.status === 200 && data) {
 			setAuthTokens(data);
+			// console.log('AuthTokens is set', data);
 			setUser(jwt_decode(data.access))
 			localStorage.setItem('authTokens', JSON.stringify(data))
 			navigate('/');
@@ -119,6 +126,7 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 			updateToken();
 		}
 		const fourMinutes = 1000*60*4;
+		const twoSeconds = 2000
 		const interval = setInterval(()=>{
 			if (authTokens) {
 				updateToken()
@@ -130,7 +138,7 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 	return(
 		//  write a type
 		<AuthContext.Provider value={contextData}>
-			{loading ? null : children}
+			{children}
 		</AuthContext.Provider>
 	)
 }
