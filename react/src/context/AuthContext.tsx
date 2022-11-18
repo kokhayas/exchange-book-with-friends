@@ -17,14 +17,8 @@ export type AuthTokens =
 export interface AuthContextInterface {
 	loginUser: (event: React.FormEvent<HTMLFormElement>) => void;
 	logoutUser: () => void;
-//   checkingSession: boolean;
-     authTokens: AuthTokens
-//   idToken: string | null;
-//   expiresAt: number | null;
-//   isAuthenticated: boolean;
-//   handleAuthentication: () => void;
-//   login: () => void;
-//   logout: () => void;
+	signUpUser: (event: React.FormEvent<HTMLFormElement>) => void;
+    authTokens: AuthTokens
 	user: User | null;
 }
 
@@ -33,15 +27,10 @@ export const authContextDefaults: AuthContextInterface = {
 	loginUser: () => {},
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	logoutUser: () => {},
-//   checkingSession: false,
-//   expiresAt: null,
-     authTokens: null,
-//   idToken: null,
-//   isAuthenticated: false,
-//   handleAuthentication: () => null,
-//   login: () => null,
-//   logout: () => null,
-  user: null,
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	signUpUser: () => {},
+    authTokens: null,
+	user: null,
 };
 
 export const AuthContext = React.createContext<AuthContextInterface>(
@@ -56,9 +45,10 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 	// localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens') || '{}'): null;
 	// const [user, setUser] = React.useState<User | null>(null);
 	//   const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
-	  const [authTokens, setAuthTokens] = React.useState<AuthTokens>(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens') || '{}'): JSON.parse('{}'));
-	  const [user, setUser] = React.useState<User | null>(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens') || '{}'): null)
-	  const loginUser = async (event: React.FormEvent<HTMLFormElement>) => {
+	const [authTokens, setAuthTokens] = React.useState<AuthTokens>(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens') || '{}'): JSON.parse('{}'));
+	const [user, setUser] = React.useState<User | null>(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens') || '{}'): null)
+
+	const loginUser = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const target = event.target as typeof event.target & {
 			username: { value: string };
@@ -85,6 +75,25 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 		console.log('response', response)
 		console.log('data', data)
 	}
+
+	const signUpUser = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const target = event.target as typeof event.target & {
+			username: { value: string };
+			password: { value: string };
+		}
+		const response = await fetch('http://localhost:8000/api/v1/register/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({'username': target.username.value, 'password': target.password.value})
+		})
+		const data = await response.json();
+		console.log("response", data)
+		navigate('/');
+		}
+
 	const logoutUser = () => {
 			setAuthTokens(null);
 			setUser(null);
@@ -112,16 +121,16 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 			logoutUser();
 		}
 		if (loading) {setLoading(false);}
-	}
-	}
+	}}
 
-	  const contextData: AuthContextInterface = {
+	const contextData: AuthContextInterface = {
 		loginUser: loginUser,
 		logoutUser: logoutUser,
+		signUpUser: signUpUser,
 		user: user,
 		authTokens: authTokens,
-	  }
-	  useEffect(() => {
+	}
+	useEffect(() => {
 		if (loading) {
 			updateToken();
 		}
@@ -132,8 +141,9 @@ export const AuthProvider = ({children}:{children: React.ReactNode}) => {
 				updateToken()
 			}
 		}, fourMinutes)
-		return () => clearInterval(interval)
-	  }, [authTokens, loading])
+		return () => clearInterval(interval)},
+		[authTokens, loading]
+	)
 
 	return(
 		//  write a type

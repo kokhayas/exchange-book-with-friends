@@ -10,7 +10,7 @@ const UsersListPage: React.FC = () => {
   }, [])
 
   const getUsers = async () => {
-	const response = await fetch('http://127.0.0.1:8000/api/v1/users');
+	const response = await fetch('http://127.0.0.1:8000/api/v1/users/');
 	const data = await response.json();
 	console.log(data)
 	setUsers(data);

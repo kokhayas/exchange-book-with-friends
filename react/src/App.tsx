@@ -4,6 +4,7 @@ import Header from './components/Header';
 import { AuthProvider } from './context/AuthContext';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
 import PrivateRoutes from './utils/PrivateRoutes';
 
 // これから実現するMVPの機能
@@ -24,6 +25,7 @@ const App: React.FC = (): JSX.Element => {
 						<Route element={<HomePage/>} path="/"/>
 					</Route>
 					<Route element={<LoginPage/>} path="/login"/>
+					<Route element={<SignUpPage/>} path="/signup"/>
 
 				</Routes>
 			</AuthProvider>

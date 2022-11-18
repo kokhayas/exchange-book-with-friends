@@ -133,3 +133,13 @@ class UserGenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserGenre
         fields = "__all__"
+
+
+class RegisterSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = User
+		fields = ("username", "password", "email")
+
+	def create(self, validated_data):
+		user = User.objects.create_user(**validated_data)
+		return user

@@ -13,7 +13,11 @@ const Header: React.FC = () => {
 		{user ? (
 			<p onClick={logoutUser}>Logout</p>
 		): (
+			<>
 			<Link to ="/login">Login</Link>
+			<span> | </span>
+			<Link to ="/signup">Sign up</Link>
+			</>
 		)}
 		{user && <p>hello {user.username}</p>}
 	</div>

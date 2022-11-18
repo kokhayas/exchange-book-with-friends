@@ -37,6 +37,7 @@ from .serializers import (
     FriendshipSerializer,
     GenreSerializer,
     NoteSerializer,
+    RegisterSerializer,
     RoomSerializer,
     UniversitySerializer,
     UserBookSerializer,
@@ -64,6 +65,32 @@ from .utils import (
     updateNote,
     updateUser,
 )
+
+
+
+from django.contrib.auth.decorators import login_required
+
+
+# User = get_user_model()
+
+# class RegisterSerializer(serializers.modelSerializer):
+# 	class Meta:
+# 		model = User
+# 		fields = ("username", "password", "email")
+
+# 	def create(self, validated_data):
+# 		user = User.objects.create_user(**validated_data)
+# 		return user
+
+# write registeration view here in django rest framework
+@api_view(['POST'])
+def register(request):
+	serializer = RegisterSerializer(data=request.data)
+	if serializer.is_valid():
+		serializer.save()
+		return Response(serializer.data, status=status.HTTP_201_CREATED)
+	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # @api_view(["GET"])
 # def getRoutes(request):
